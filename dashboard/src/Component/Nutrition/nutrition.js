@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const NUTRITIONIX_APP_ID = '87bee410';  // Replace with your Nutritionix App ID
-const NUTRITIONIX_API_KEY = '8b97cad7517a7997e43e8390fdcbd37a'; // Replace with your Nutritionix API Key
+const NUTRITIONIX_APP_ID = '87bee410';
+const NUTRITIONIX_API_KEY = '8b97cad7517a7997e43e8390fdcbd37a';
 
 const AddNutritionForm = () => {
   const [formData, setFormData] = useState({
@@ -16,9 +16,8 @@ const AddNutritionForm = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
 
-  const userId = '665e4fb01307d6f441234567'; // Replace with actual user ID
+  const userId = '665e4fb01307d6f441234567';
 
-  // Fetch nutrition data from Nutritionix API by foodName
   const fetchNutritionData = async (foodName) => {
     if (!foodName) return;
 
@@ -47,19 +46,18 @@ const AddNutritionForm = () => {
           carbs: food.nf_total_carbohydrate || '',
           fats: food.nf_total_fat || '',
         });
-        setMessage('Nutrition data fetched automatically!');
+        setMessage('✅ Nutrition data fetched!');
       } else {
-        setMessage('No nutrition data found for this food.');
+        setMessage('⚠️ No data found for this food.');
       }
     } catch (error) {
       console.error(error);
-      setMessage('Failed to fetch nutrition data.');
+      setMessage('❌ Failed to fetch nutrition data.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Handle input changes (including foodName)
   const handleChange = (e) => {
     setFormData(prev => ({
       ...prev,
@@ -67,12 +65,10 @@ const AddNutritionForm = () => {
     }));
   };
 
-  // On foodName input blur, fetch nutrition info
   const handleFoodNameBlur = () => {
     fetchNutritionData(formData.foodName.trim());
   };
 
-  // Submit form to backend
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -88,78 +84,85 @@ const AddNutritionForm = () => {
         userId,
       });
 
-      setMessage('Nutrition data saved successfully!');
+      setMessage('✅ Nutrition data saved successfully!');
       setFormData({ foodName: '', calories: '', protein: '', carbs: '', fats: '' });
     } catch (err) {
       console.error(err);
-      setMessage('Error saving nutrition data.');
+      setMessage('❌ Error saving nutrition data.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: 500, margin: 'auto', padding: 20 }}>
-      <h2>Add Nutrition Data</h2>
+    <div style={{
+      maxWidth: 500,
+      margin: '50px auto',
+      padding: 30,
+      borderRadius: 20,
+      border: '2px solid #28a745',
+      background: '#000',
+      fontFamily: 'Arial, sans-serif',
+      color: '#fff',
+    }}>
+      <h2 style={{ textAlign: 'center', color: '#28a745' }}>🥗 Add Nutrition Data</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          name="foodName"
-          placeholder="Food Name"
-          value={formData.foodName}
-          onChange={handleChange}
-          onBlur={handleFoodNameBlur}
-          required
-          style={{ width: '100%', padding: 8, marginBottom: 10 }}
-          disabled={loading}
-        />
+        {['foodName', 'calories', 'protein', 'carbs', 'fats'].map((field, idx) => (
+          <input
+            key={idx}
+            name={field}
+            type={field === 'foodName' ? 'text' : 'number'}
+            placeholder={field.charAt(0).toUpperCase() + field.slice(1) + (field !== 'foodName' ? ' (g)' : '')}
+            value={formData[field]}
+            onChange={handleChange}
+            onBlur={field === 'foodName' ? handleFoodNameBlur : undefined}
+            required
+            disabled={loading}
+            style={{
+              width: '100%',
+              padding: '12px 14px',
+              marginBottom: 15,
+              borderRadius: 10,
+              border: '1px solid #28a745',
+              fontSize: 16,
+              backgroundColor: '#111',
+              color: '#fff',
+            }}
+          />
+        ))}
 
-        <input
-          name="calories"
-          type="number"
-          placeholder="Calories"
-          value={formData.calories}
-          onChange={handleChange}
-          required
-          style={{ width: '100%', padding: 8, marginBottom: 10 }}
+        <button
+          type="submit"
           disabled={loading}
-        />
-        <input
-          name="protein"
-          type="number"
-          placeholder="Protein (g)"
-          value={formData.protein}
-          onChange={handleChange}
-          required
-          style={{ width: '100%', padding: 8, marginBottom: 10 }}
-          disabled={loading}
-        />
-        <input
-          name="carbs"
-          type="number"
-          placeholder="Carbs (g)"
-          value={formData.carbs}
-          onChange={handleChange}
-          required
-          style={{ width: '100%', padding: 8, marginBottom: 10 }}
-          disabled={loading}
-        />
-        <input
-          name="fats"
-          type="number"
-          placeholder="Fats (g)"
-          value={formData.fats}
-          onChange={handleChange}
-          required
-          style={{ width: '100%', padding: 8, marginBottom: 10 }}
-          disabled={loading}
-        />
-
-        <button type="submit" disabled={loading} style={{ padding: '10px 20px' }}>
+          style={{
+            width: '100%',
+            padding: '12px',
+            fontSize: 16,
+            backgroundColor: '#28a745',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 10,
+            cursor: 'pointer',
+            transition: 'background 0.3s',
+          }}
+        >
           {loading ? 'Saving...' : 'Add Nutrition'}
         </button>
       </form>
 
-      {message && <p style={{ marginTop: 20 }}>{message}</p>}
+      {message && (
+        <p style={{
+          marginTop: 20,
+          padding: 12,
+          backgroundColor: '#111',
+          borderRadius: 10,
+          textAlign: 'center',
+          color: message.includes('✅') ? '#28a745' : message.includes('❌') ? '#dc3545' : '#ffc107',
+          fontWeight: 500,
+        }}>
+          {message}
+        </p>
+      )}
     </div>
   );
 };
