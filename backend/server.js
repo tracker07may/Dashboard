@@ -6,6 +6,8 @@ const connectDB = require("./database");
 const cors = require('cors');
 const workoutRoutes = require('./Routes/Route'); // ✅ Corrected path
 const setCounterRoutes = require('./Routes/Setroute');
+const nutritionroute = require('./Routes/nutrionroute');
+
 const app = express();
 const PORT = process.env.PORT || 3009;
 
@@ -14,8 +16,10 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/workouts', workoutRoutes);
-app.use('/api/setcounter', setCounterRoutes);
+app.use('/api/workouts/', workoutRoutes);
+app.use('/api/setcounter/', setCounterRoutes);
+app.use('/api/nutrition/', nutritionroute);
+
 
 // MongoDB Connection
 

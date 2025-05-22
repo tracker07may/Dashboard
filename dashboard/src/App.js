@@ -6,6 +6,8 @@ import AddWorkout from "./Component/workout/Addworkout";
 import ViewWorkout from "./Component/workout/Viewworkout";
 import ViewSetCounter from "./Component/setcounter/ViewSetCounter";
 import AddSetCounter from "./Component/setcounter/AddSetCounter";
+import NutritionForm from "./Component/Nutrition/nutrition";
+import AddNutritionForm from "./Component/Nutrition/nutrition";
 
 
 
@@ -20,6 +22,8 @@ function App() {
           <Route path="/view" element={<ViewWorkout />} />
           <Route path="/set" element={<AddSetCounter />} />
           <Route path="/viewset" element={<ViewSetCounter />} />
+          <Route path="/nutrition" element={<AddNutritionForm />} />
+
 
           
         
