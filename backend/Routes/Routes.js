@@ -2,7 +2,7 @@ let express = require("express");
 let router = express.Router();
 let { registerUser, getAllUsers, loginUser, forgot_pswd } = require("../Controller/Logics"); // ✅ Import added
 
-router.post("/users/register", registerUser);
+router.post("/register", registerUser);
 router.get("/users", getAllUsers);
 router.post("/users/login", loginUser);
 router.post("/users/forgot", forgot_pswd);

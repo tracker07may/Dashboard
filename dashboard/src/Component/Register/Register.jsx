@@ -27,7 +27,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3008/web/users/register', formData);
+      await axios.post('http://localhost:3009/api/users/register', formData);
       toast.success("✅ Registered successfully!");
       setFormData({
         name: '', email: '', password: '', age: '',
@@ -109,7 +109,7 @@ function Register() {
               </button>
               <div className="text-center mt-3">
                 <p className="mb-0">Already have an account?</p>
-                <Link to="/" className="text-decoration-none fw-semibold text-dark">
+                <Link to="/login" className="text-decoration-none fw-semibold text-dark">
                   Login Your Account
                 </Link>
               </div>

@@ -101,7 +101,7 @@ const forgot_pswd = async function (req, res) {
     }
 
     let random_set = crypto.randomBytes(25).toString("hex");
-    let link = `http://localhost:3008/web/resetpswd/${random_set}`;
+    let link = `http://localhost:3009/web/resetpswd/${random_set}`;
 
     let Email_Body = {
       to: email_check.email,

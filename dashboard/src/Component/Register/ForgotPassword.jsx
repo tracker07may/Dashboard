@@ -15,7 +15,7 @@ function ForgotPassword() {
     }
 
     try {
-      const res = await axios.post('http://localhost:3008/web/users/forgot', { email });
+      const res = await axios.post('http://localhost:3009/api/users/users/forgot', { email });
       toast.success('📧 Password reset link sent to your email!');
     } catch (error) {
       toast.error("❌ Error: " + (error.response?.data?.error || error.message));
