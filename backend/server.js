@@ -7,6 +7,8 @@ const cors = require('cors');
 const workoutRoutes = require('./Routes/Route'); // ✅ Corrected path
 const setCounterRoutes = require('./Routes/Setroute');
 const nutritionroute = require('./Routes/nutrionroute');
+const userroute = require('./Routes/Routes');
+
 
 const app = express();
 const PORT = process.env.PORT || 3009;
@@ -17,6 +19,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/workouts/', workoutRoutes);
+app.use('/api/users/', userroute);
 app.use('/api/setcounter/', setCounterRoutes);
 app.use('/api/nutrition/', nutritionroute);
 

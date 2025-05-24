@@ -18,35 +18,65 @@ const ViewSetCounter = () => {
   }, []);
 
   return (
-    <div className="container mt-5">
-      <div className="card shadow-lg rounded-4 p-4 bg-dark text-white">
-        <h2 className="text-center mb-4">📋 Set Counter History</h2>
-        {sets.length === 0 ? (
-          <p className="text-center">No Set Counters Added Yet.</p>
-        ) : (
-          <div className="table-responsive">
-            <table className="table table-hover table-bordered text-white">
-              <thead className="table-light text-dark">
-                <tr>
-                  <th>Exercise</th>
-                  <th>Set Count</th>
-                  <th>Notes</th>
-                  <th>Timestamp</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sets.map((set) => (
-                  <tr key={set._id}>
-                    <td>{set.workoutName}</td>
-                    <td>{set.totalSets}</td>
-                    <td>{set.notes || "—"}</td>
-                    <td>{new Date(set.createdAt).toLocaleString()}</td>
+    <div className="container my-5">
+      <div
+        className="card shadow-lg border-0 text-white"
+        style={{ backgroundColor: "#1c1c1e", borderRadius: "1rem" }}
+      >
+        <div
+          className="card-header text-center"
+          style={{
+            background: "linear-gradient(to right, #00c6ff, #0072ff)",
+            borderTopLeftRadius: "1rem",
+            borderTopRightRadius: "1rem",
+          }}
+        >
+          <h2 className="mb-0 py-2">📋 Set Counter History</h2>
+        </div>
+        <div className="card-body">
+          {sets.length === 0 ? (
+            <p className="text-center text-secondary">No Set Counters Added Yet.</p>
+          ) : (
+            <div className="table-responsive">
+              <table className="table table-dark table-borderless align-middle">
+                <thead>
+                  <tr style={{ borderBottom: "2px solid #444" }}>
+                    <th>🏋️‍♀️ Exercise</th>
+                    <th>🔢 Set Count</th>
+                    <th>📝 Notes</th>
+                    <th>⏱️ Timestamp</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                </thead>
+                <tbody>
+                  {sets.map((set) => (
+                    <tr
+                      key={set._id}
+                      className="rounded-3"
+                      style={{
+                        backgroundColor: "#2c2c2e",
+                        borderRadius: "10px",
+                        transition: "background 0.3s",
+                      }}
+                    >
+                      <td className="fw-semibold text-info">{set.workoutName}</td>
+                      <td>
+                        <span className="badge bg-success fs-6 px-3 py-2">
+                          {set.totalSets}
+                        </span>
+                      </td>
+                      <td className="fst-italic text-light">
+                        {set.notes ? set.notes : "—"}
+                      </td>
+                      <td className="text-secondary small">
+                        {new Date(set.createdAt).toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

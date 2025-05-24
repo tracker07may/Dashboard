@@ -38,7 +38,7 @@ const getAllNutritionData = async (req, res) => {
 // GET ONE
 const getNutritionById = async (req, res) => {
   try {
-    const data = await Nutrition.findById(req.params.id);
+    const data = await Nutrition.findById();
     if (!data) return res.status(404).json({ message: 'Data not found' });
     res.status(200).json(data);
   } catch (error) {
