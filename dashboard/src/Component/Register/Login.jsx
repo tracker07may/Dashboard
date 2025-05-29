@@ -23,6 +23,7 @@ function Login() {
     try {
       const res = await axios.post('http://localhost:3009/api/users/users/login', formData);
       toast.success('✅ Login successful!');
+      localStorage.setItem("user_data",JSON.stringify(res.data.user))
     } catch (error) {
       toast.error("❌ Login failed: " + (error.response?.data?.error || error.message));
     }

@@ -2,6 +2,7 @@ const User = require("../Models/Users");
 let bcrypt = require("bcrypt");
 let nodemailer = require("nodemailer");
 let crypto = require("crypto"); // Add this line for reset token
+let jwt = require("jsonwebtoken");
 require("dotenv").config();
 let email_info = nodemailer.createTransport({
   service: "gmail",
@@ -84,7 +85,13 @@ const loginUser = async (req, res) => {
     if (!ver) {
       return res.status(401).json({ error: "Invalid password" });
     }
-    res.status(200).json({ message: "Login successful", user });
+    let token = jwt.sign({id : user.id} , process.env.SECRET_KEY,{expiresIn : "1h"})
+    res.status(200).json({ message: "Login successful", user:{
+      tokenid : token,
+      username:user.name,
+      email:user.email,
+      id:user.id
+    } });
   } catch (error) {
     console.error("Login Error:", error);
     res.status(500).json({ error: "Internal Server Error" });
